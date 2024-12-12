@@ -279,7 +279,7 @@ def prevalencias_des(b, lista_vars, dicc, var_des, alp = 0.95, ponderador = 'fac
     return resultado.sort_values(var_des)
 
 # --- Función para agupar los cálculos de prevelencias totales y desagregadas por sexo y grupo etario --- #
-def tabulados_prevalencias(b, lista_vars, dicc, var_des = [], alp = 0.95, var_ge='grupo_etario', ponderador = 'factor_exp', estrato = 'estrato', upm = 'upm'):
+def tabulados_prevalencias(b, lista_vars, dicc, var_des = [], alp = 0.95, var_sexo='sexo', var_ge='grupo_etario', ponderador = 'factor_exp', estrato = 'estrato', upm = 'upm'):
     """
     Estructura un dataframe con las prevalencias de lista_vars, totales y desagregadas por sexo y grupo etario.
     
@@ -296,6 +296,10 @@ def tabulados_prevalencias(b, lista_vars, dicc, var_des = [], alp = 0.95, var_ge
     alp: float
         Valor entre 0 y 1 para definir el nivel de significancia del intervalo.
         El valor predeterminado es 0.95, para tener intervalos con un 95% de significancia.
+    var_sexo: str
+        Nombre de la variable que contiene el sexo.
+    var_ge: str
+        Nombre de la variable que contiene el grupo etario.
     ponderador: str
         Nombre de la variable que contiene el ponderador.
     estrato : str
@@ -311,11 +315,11 @@ def tabulados_prevalencias(b, lista_vars, dicc, var_des = [], alp = 0.95, var_ge
         Tabla agrupando las estimaciones por sexo y grupo etario de acuerdo a la desagregación var_des (si es que se incluyó).
     """
     # estimación de prevalencia para toda la población desagregada por sexo y grupo etario
-    x2 = prevalencias_des(b, lista_vars, dicc, var_des + ['sexo',var_ge], alp, ponderador, estrato, upm)
+    x2 = prevalencias_des(b, lista_vars, dicc, var_des + [var_sexo,var_ge], alp, ponderador, estrato, upm)
     
     # estimación de prevalencia para toda la población desagregada por sexo
-    x1 = prevalencias_des(b, lista_vars, dicc, var_des + ['sexo'], alp, ponderador, estrato, upm)
-    x1.insert(0,var_ge,'Población de 12-75 años')
+    x1 = prevalencias_des(b, lista_vars, dicc, var_des + [var_sexo], alp, ponderador, estrato, upm)
+    x1.insert(0,var_ge,'Población total')
     
     # estimación de prevalencia para toda la población
     if var_des == []:       
@@ -323,8 +327,8 @@ def tabulados_prevalencias(b, lista_vars, dicc, var_des = [], alp = 0.95, var_ge
     else: 
         x0 = prevalencias_des(b, lista_vars, dicc, var_des, alp, ponderador, estrato, upm)
     
-    x0.insert(0,var_ge,'Población de 12-75 años')
-    x0.insert(0,'sexo', 'Mujeres y hombres')
+    x0.insert(0,var_ge,'Población total')
+    x0.insert(0,var_sexo, 'Mujeres y hombres')
     
     #agrupado de las distintas estimaciones
     x=pd.concat([x0,x1,x2]).rename(columns={var_ge:'grupo_etario'})
