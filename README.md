@@ -20,7 +20,7 @@ Adicionalmente se requieren las siguientes bibliotecas:
 
 ## Instalación
 
-Para instalar las bibliotecas antes mencionadas es recomendable crear un [entorno virtual](https://docs.python.org/es/3.8/library/venv.html#venv-def). Existen distintas herramientas de instalación que te permiten crear entornos virtuales. En esta sección se dan las instrucciones para generar un entorno virtual con: pipenv y conda, sin embargo la persona usuaria puede utilizar la herramienta o manejador de entorno virual que prefiera.
+Para instalar las bibliotecas antes mencionadas es recomendable crear un [entorno virtual](https://docs.python.org/es/3.8/library/venv.html#venv-def). Existen distintas herramientas de instalación que te permiten crear entornos virtuales. En esta sección se dan las instrucciones para generar un entorno virtual con: pipenv o conda, sin embargo la persona usuaria puede utilizar la herramienta o manejador de entorno virtual que prefiera.
 
 #### Instrucciones
 0. Descarga el repositorio.
